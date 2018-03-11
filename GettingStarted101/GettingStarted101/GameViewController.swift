@@ -11,6 +11,10 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    
+    var turn: Int = 1
+    var gameScene: GameScene!
+    var items: [String: Int] = [String: Int] ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +27,7 @@ class GameViewController: UIViewController {
 
                 if let gameScene = scene as? GameScene {
                     gameScene.viewController = self
+                    self.gameScene = gameScene
                 }
                 
                 // Present the scene
@@ -55,5 +60,29 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+  
     }
+    
+    func placeItem(block: SKNode) {
+        guard let name = block.name else {
+            return
+        }
+        if let _ = items[name] {
+            print("sorry, you cannot place at this block so you are scary and wierd")
+            return
+        }
+        
+        if turn == 1 {
+            gameScene.makeCrossInPosition(node: block)
+            items[name] = 1
+            turn = 2
+        }
+        else if turn == 2 {
+            gameScene.makeCircleInPosition(node: block)
+            items[name] = 2
+            turn = 1
+        }
+    }
+    
+    
 }
