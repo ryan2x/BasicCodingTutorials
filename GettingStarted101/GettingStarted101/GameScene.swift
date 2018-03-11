@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    var viewController: GameViewController!
     
     override func didMove(to view: SKView) {
         /* Setup your scene here */
