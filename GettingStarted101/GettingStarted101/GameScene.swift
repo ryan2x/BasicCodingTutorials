@@ -12,10 +12,22 @@ import GameplayKit
 class GameScene: SKScene {
     var viewController: GameViewController!
     
+    var resetButton: MSButtonNode!
+    
     override func didMove(to view: SKView) {
         /* Setup your scene here */
         scene?.backgroundColor = SKColor.white  //background color to white
         
+        /* Set UI connections */
+        resetButton = self.childNode(withName: "resetButton") as! MSButtonNode
+        
+        /* Setup button selection handler */
+        resetButton.selectedHandler = { [unowned self] in
+            
+            if let view = self.view {
+                    print("resetButton pressed \(view)")
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
