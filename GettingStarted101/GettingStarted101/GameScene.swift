@@ -37,10 +37,19 @@ class GameScene: SKScene {
         for node in self.children {
             if node.contains(location) {
                 // print ("touched... \(node.name)")
+                if node.name == "reset" {
+                    resetGame()
+                    return nil
+                }
                 return node
             }
         }
         return nil
+    }
+    
+    func resetGame ()
+    {
+        print (" resetGame ")
     }
     
     func makeCircleInPosition(node: SKNode) {
