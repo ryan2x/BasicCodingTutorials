@@ -75,14 +75,102 @@ class GameViewController: UIViewController {
         if turn == 1 {
             gameScene.makeCrossInPosition(node: block)
             items[name] = 1
+            
+            if checkWinner() != nil {
+                turn = 0
+                return
+            }
+            
             turn = 2
         }
         else if turn == 2 {
             gameScene.makeCircleInPosition(node: block)
             items[name] = 2
+
+            if checkWinner() != nil {
+                turn = 0
+                return
+            }
+            
             turn = 1
         }
     }
     
+    func checkWinner () -> Int? {
+        // check rows
+        for j in 1...4 {
+            if let value = items["1/\(j)"] {
+                var counter: Int = 1
+                for i in 2...4 {
+                    if let val2 = items["\(i)/\(j)"], val2 == value {
+                        counter += 1
+                    }
+                    else {
+                        break
+                    }
+                }
+                if counter == 4 {
+                    print ("winner \(value)")
+                    return value
+                }
+            }
+        }
+        // check columns
+        for i in 1...4 {
+            if let value = items["1/\(i)"] {
+                var counter: Int = 1
+                for j in 2...4 {
+                    if let val2 = items["\(i)/\(j)"], val2 == value {
+                        counter += 1
+                    }
+                    else {
+                        break
+                    }
+                }
+                if counter == 4 {
+                    print ("winner \(value)")
+                    return value
+                }
+            }
+        }
+        // check diagonals
+        if let value = items["1/1"] {
+            var counter: Int = 1
+            for i in 2...4 {
+                if let val2 = items["\(i)/\(i)"], val2 == value {
+                    counter += 1
+                }
+                else {
+                    break
+                }
+            }
+            if counter == 4 {
+                print ("winner \(value)")
+                return value
+            }
+        }
+        if let value = items["1/4"] {
+            var counter: Int = 1
+            for i in 2...4 {
+                let j = 5 - i
+                if let val2 = items["\(i)/\(j)"], val2 == value {
+                    counter += 1
+                }
+                else {
+                    break
+                }
+            }
+            if counter == 4 {
+                print ("winner \(value)")
+                return value
+            }
+        }
+        
+        return nil
+    }
     
+    func resetBoard() {
+        items.removeAll()
+        turn = 1
+    }
 }

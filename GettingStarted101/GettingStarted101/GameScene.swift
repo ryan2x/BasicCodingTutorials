@@ -156,7 +156,7 @@ class GameScene: SKScene {
             }
         }
     
-        self.viewController.items.removeAll()
+        self.viewController.resetBoard()
     }
     
 }
