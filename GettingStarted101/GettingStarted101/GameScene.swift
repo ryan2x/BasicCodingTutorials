@@ -24,9 +24,10 @@ class GameScene: SKScene {
         /* Setup button selection handler */
         resetButton.selectedHandler = { [unowned self] in
             
-            if let view = self.view {
-                    print("resetButton pressed \(view)")
-            }
+//            if let view = self.view {
+//                    print("resetButton pressed \(view)")
+//            }
+            self.resetBoard()
         }
     }
     
@@ -121,4 +122,41 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    
+    func resetBoard ()
+    {
+        for i in 1...4 {
+            for j in 1...4 {
+                // print ("node c")
+                let name = "\(i)/\(j)"
+                if let node = self.childNode(withName: name) {
+                    if node.children.count > 0 {
+                        print ("clear node")
+                        node.removeAllChildren()
+                    }
+                }
+                else {
+                    var node1: SKNode? = nil
+                    for node in self.children {
+                        if node.name == name {
+                            node1 = node
+                            break
+                        }
+                    }
+                    if let node = node1 {
+                        if node.children.count > 0 {
+                            print ("clear node \(name)")
+                            node.removeAllChildren()
+                        }
+                    }
+                    else {
+                        print ("node not found \(name)")
+                    }
+                }
+            }
+        }
+    
+        self.viewController.items.removeAll()
+    }
+    
 }
